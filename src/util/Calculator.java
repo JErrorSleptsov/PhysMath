@@ -3,7 +3,7 @@ package util;
 import interfaces.PhysicMethods;
 
 public class Calculator implements PhysicMethods {
-    static double g = 9.81;
+    private final static double g = 9.81;
 
     @Override
     public double findSpeedUseHeight(double height, double startSpeed) {

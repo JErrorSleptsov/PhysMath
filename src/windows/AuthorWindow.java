@@ -4,7 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Класс представляющий фрейм окна "Об авторе".
+ * В нем содержится некоторая информация о студенте,
+ * выполнившем работу
+ * @author Sleptsov D.A.
+ * */
 public class AuthorWindow extends JFrame{
     private JPanel pnlContent = new JPanel();
     private ImageIcon imgAvatar = new ImageIcon("resources/images/author.png");

@@ -6,7 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Класс представляющий фрейм приветсвенного окна.
+ * В нем содержится информация титульного листа курсовой работы
+ * @author Sleptsov D.A.
+ * */
 public class SplashScreen extends JFrame{
     private JPanel pnlContent = new JPanel();
     private JPanel pnlImage = new JPanel();
