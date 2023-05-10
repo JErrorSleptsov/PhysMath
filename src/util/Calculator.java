@@ -1,7 +1,11 @@
 package util;
 
 import interfaces.PhysicMethods;
-
+/**
+ * Класс, который реализует интерфейс абстрактные методы класса PhysicMethods
+ * Предназначен для расчёта характеристик тела
+ * @author Sleptsov D.A.
+ * */
 public class Calculator implements PhysicMethods {
     private final static double g = 9.81;
 

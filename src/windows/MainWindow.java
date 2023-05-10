@@ -403,7 +403,7 @@ public class MainWindow extends JFrame {
      * @param painter - объект, ответсвенный за отрисовку графика
      * @param chart - представляет холст для создания графика
      * */
-    public void paintGraphic(GraphicsPainter painter, JFreeChart chart) {
+    private void paintGraphic(GraphicsPainter painter, JFreeChart chart) {
         painter.setStartSpeed(startSpeedValue);
         painter.setWeight(weightValue);
         painter.setHeight(heightValue);

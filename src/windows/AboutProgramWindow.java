@@ -149,7 +149,6 @@ public class AboutProgramWindow extends JFrame {
         pnlMenu.add(lblVersion);
 
 
-
         // Устанавливаем действие при наведении на кнопки
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override

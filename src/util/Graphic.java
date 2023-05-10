@@ -1,14 +1,22 @@
 package util;
 
+import interfaces.GraphData;
+
 import java.util.ArrayList;
 
-
-public class Graphic {
+/**
+ * Класс Graphic представляет математическое представление графика, а именно
+ * он представляет множество точек, на основании которых будет рисоватьс график
+ * Содержит методы заполнения массива точек для различных графиков
+ * @author Sleptsov D.A.
+ * */
+public class Graphic implements GraphData {
     private Calculator calculator =  new Calculator();
     private double X;
     private double Y;
     private ArrayList<PointOnGraphic> points = new ArrayList<>();
 
+    @Override
     public ArrayList createSpeedOnHeightGraphic(double height, double startSpeed){
         double k = height/1000;
         double h=height;
@@ -21,6 +29,7 @@ public class Graphic {
         }
         return points;
     }
+    @Override
     public ArrayList createSpeedOnTimeGraphic(double height, double startSpeed){
         double fallTime = calculator.findFallTime(height, startSpeed);
         double time=0;
@@ -34,6 +43,7 @@ public class Graphic {
         }
         return points;
     }
+    @Override
     public ArrayList createPotentialEnergyUseHeightGraphic(double weight, double height){
         double k = height/1000;
         double h=height;
@@ -46,6 +56,7 @@ public class Graphic {
         }
         return points;
     }
+    @Override
     public ArrayList createKinematicEnergyUseHeightGraphic(double weight, double height, double startSpeed){
         double k = height/1000;
         double h=height;
@@ -60,6 +71,7 @@ public class Graphic {
         }
         return points;
     }
+    @Override
     public ArrayList createKinematicEnergyUseTimeGraphic(double weight, double height, double startSpeed){
         double fallTime= calculator.findFallTime(height,startSpeed);
         double time=0;
@@ -75,6 +87,7 @@ public class Graphic {
         }
         return points;
     }
+    @Override
     public ArrayList createPotentialEnergyUseTimeGraphic(double weight, double height, double startSpeed){
         double fallTime= calculator.findFallTime(height, startSpeed);
         double time=0;
