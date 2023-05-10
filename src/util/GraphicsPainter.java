@@ -82,29 +82,7 @@ public class GraphicsPainter {
 
     public XYDataset createDataset() {
         series = new XYSeries(this.title); // Переменная для записи точек графикаv
-
-        if (this.title=="Скорость" && yAxisLabel=="Высота"){ // Условие для графика скорость/высота
-            points = graphic.createSpeedOnHeightGraphic(height, startSpeed);
-        }
-        if (this.title=="Скорость" && yAxisLabel=="Время"){ // Условие для графика скорость/время
-            points = graphic.createSpeedOnTimeGraphic(height,startSpeed);
-        }
-        if (this.title=="Потенциальная энергия" && yAxisLabel=="Высота"){ // Условие для графика энергия/высота
-            points = graphic.createPotentialEnergyUseHeightGraphic(weight,height);
-        }
-        if (this.title=="Кинетическая энергия" && yAxisLabel=="Высота"){ // Условие для графика энергия/высота
-            points = graphic.createKinematicEnergyUseHeightGraphic(weight,height,startSpeed);
-        }
-        if (this.title=="Кинетическая энергия" && yAxisLabel=="Время"){ // Условие для графика энергия/высота
-            points = graphic.createKinematicEnergyUseTimeGraphic(weight,height, startSpeed);
-        }
-        if (this.title=="Потенциальная энергия" && yAxisLabel=="Время"){ // Условие для графика энергия/высота
-            points = graphic.createPotentialEnergyUseTimeGraphic(weight,height, startSpeed);
-        }
-        for (PointOnGraphic point: points) { // запись точек в график
-            series.add(point.getX(), point.getY());
-        }
-        return new XYSeriesCollection(series);
+         return updateDataset();
     }
     public XYDataset updateDataset(){
         series.clear();

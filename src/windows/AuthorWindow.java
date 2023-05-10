@@ -4,31 +4,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * Класс представляющий фрейм окна "Об авторе".
  * В нем содержится некоторая информация о студенте,
  * выполнившем работу
+ *
  * @author Sleptsov D.A.
- * */
-public class AuthorWindow extends JFrame{
-    private JPanel pnlContent = new JPanel();
-    private ImageIcon imgAvatar = new ImageIcon("resources/images/author.png");
-    private JLabel lblForAvatar = new JLabel(imgAvatar);
-    private JLabel lblGroup = new JLabel("Студент группы 10702420");
-    private JLabel lblName = new JLabel("Слепцов Даниил Алексеевич");
-    private JLabel lblEmail = new JLabel("danill.sleptsov.png@gmail.com");
-    private Font fontForInfo = new Font("Montserrat Medium", Font.PLAIN, 16);
+ */
+public class AuthorWindow extends JFrame {
+
+
     private JButton btnBack = new JButton("Вернуться");
+
     public AuthorWindow() {
+        JPanel pnlContent = new JPanel();
         pnlContent.setLayout(new BoxLayout(pnlContent, BoxLayout.PAGE_AXIS));
         pnlContent.setBackground(Color.WHITE);
 
-
+        JLabel lblGroup = new JLabel("Студент группы 10702420");
+        JLabel lblName = new JLabel("Слепцов Даниил Алексеевич");
+        JLabel lblEmail = new JLabel("danill.sleptsov.png@gmail.com");
+        Font fontForInfo = new Font("Montserrat Medium", Font.PLAIN, 16);
         lblGroup.setFont(fontForInfo);
         lblName.setFont(fontForInfo);
         lblEmail.setFont(fontForInfo);
         btnBack.setFont(fontForInfo);
-
+        ImageIcon imgAvatar = new ImageIcon("resources/images/author.png");
+        JLabel lblForAvatar = new JLabel(imgAvatar);
         // установка выравнивания элементов по центру
         lblForAvatar.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -64,7 +67,7 @@ public class AuthorWindow extends JFrame{
 
         setTitle("Об Авторе");
         // установка размеров и запрет изменения размеров окна
-        setSize(350,400);
+        setSize(350, 400);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);

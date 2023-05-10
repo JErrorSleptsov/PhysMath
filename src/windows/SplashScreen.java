@@ -1,4 +1,5 @@
 package windows;
+
 import listeners.TimerListener;
 import windows.MainWindow;
 
@@ -6,45 +7,40 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * Класс представляющий фрейм приветсвенного окна.
  * В нем содержится информация титульного листа курсовой работы
+ *
  * @author Sleptsov D.A.
- * */
-public class SplashScreen extends JFrame{
-    private JPanel pnlContent = new JPanel();
-    private JPanel pnlImage = new JPanel();
-    private JPanel pnlNames = new JPanel();
-    private JPanel pnlButtons = new JPanel();
-    private JPanel pnlCity = new JPanel();
-    private JPanel pnlCW = new JPanel();
+ */
+public class SplashScreen extends JFrame {
 
-    private ImageIcon imgMainIcon = new ImageIcon("resources/images/ApplicationIcon.png");
-    private JLabel lblMainImage = new JLabel(imgMainIcon);
-
-
-    private JLabel lblSeconds = new JLabel("60");
-    private JLabel lblBNTU = new JLabel("Белорусский национальный технический университет");
-    private JLabel lblFaculty = new JLabel("Факультет информационных технологий и робототехники");
-    private JLabel lblKaphedra = new JLabel("Кафедра программаного обеспечения информационных систем и технологий");
-    private JLabel lblCW = new JLabel("Курсовая работа");
-    private JLabel lblSub = new JLabel("по дисциплине \"Программирование на языке Java\"");
-    private JLabel lblTheme = new JLabel("\"Расчёт кинематических характеристик тела при свободном падении\"");
-    private JLabel lblStudent = new JLabel("<html>Выполнил: студент группы 10702420" +
-            "<br/>Слепцов Даниил Алексеевич<html>");
-    private JLabel lblTeacher = new JLabel("<html>Преподаватель: к.ф.-м.н., доц." +
-            "<br/>Сидорик Валерий Владимирович<html>");
-    private JLabel lblCity = new JLabel("Минск 2023");
-
-    private JButton btnExit = new JButton("Выход (" + lblSeconds.getText() + ")");
-    private JButton btnNext = new JButton("Далее");
 
     public SplashScreen() {
-        Timer timer = new Timer(1000, new TimerListener(lblSeconds,btnExit));
-        timer.start();
 
-        pnlCW.setPreferredSize(new Dimension(420,100));
+        JPanel pnlContent = new JPanel();
+        JPanel pnlCW = new JPanel();
+        pnlCW.setPreferredSize(new Dimension(420, 100));
         pnlContent.setLayout(new FlowLayout());
+
+        JLabel lblSeconds = new JLabel("60");
+        JLabel lblBNTU = new JLabel("Белорусский национальный технический университет");
+        JLabel lblFaculty = new JLabel("Факультет информационных технологий и робототехники");
+        JLabel lblKaphedra = new JLabel("Кафедра программаного обеспечения информационных систем и технологий");
+        JLabel lblCW = new JLabel("Курсовая работа");
+        JLabel lblSub = new JLabel("по дисциплине \"Программирование на языке Java\"");
+        JLabel lblTheme = new JLabel("\"Расчёт кинематических характеристик тела при свободном падении\"");
+        JLabel lblStudent = new JLabel("<html>Выполнил: студент группы 10702420" +
+                "<br/>Слепцов Даниил Алексеевич<html>");
+        JLabel lblTeacher = new JLabel("<html>Преподаватель: к.ф.-м.н., доц." +
+                "<br/>Сидорик Валерий Владимирович<html>");
+        JLabel lblCity = new JLabel("Минск 2023");
+
+        JButton btnExit = new JButton("Выход (" + lblSeconds.getText() + ")");
+        JButton btnNext = new JButton("Далее");
+        Timer timer = new Timer(1000, new TimerListener(lblSeconds, btnExit));
+        timer.start();
 
         lblBNTU.setFont(new Font("Montserrat Medium", Font.BOLD, 18));
         lblBNTU.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,7 +48,7 @@ public class SplashScreen extends JFrame{
         lblFaculty.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblKaphedra.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblKaphedra.setFont(new Font("Montserrat Medium", Font.PLAIN, 12));
-        lblCW.setFont(new Font("Montserrat Medium",Font.BOLD,18));
+        lblCW.setFont(new Font("Montserrat Medium", Font.BOLD, 18));
         pnlCW.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblStudent.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
         lblTeacher.setFont(new Font("Montserrat Medium", Font.PLAIN, 14));
@@ -77,18 +73,22 @@ public class SplashScreen extends JFrame{
         pnlCW.add(lblCW, BorderLayout.NORTH);
         pnlCW.add(lblSub, BorderLayout.CENTER);
         pnlCW.add(lblTheme, BorderLayout.SOUTH);
-
-        pnlNames.setLayout(new BoxLayout(pnlNames,BoxLayout.Y_AXIS));
+        JPanel pnlImage = new JPanel();
+        JPanel pnlNames = new JPanel();
+        JPanel pnlButtons = new JPanel();
+        JPanel pnlCity = new JPanel();
+        pnlNames.setLayout(new BoxLayout(pnlNames, BoxLayout.Y_AXIS));
         pnlNames.add(lblStudent);
         pnlNames.add(Box.createVerticalStrut(15));
         pnlNames.add(lblTeacher);
-
+        ImageIcon imgMainIcon = new ImageIcon("resources/images/ApplicationIcon.png");
+        JLabel lblMainImage = new JLabel(imgMainIcon);
         pnlImage.setLayout(new FlowLayout());
         pnlImage.add(lblMainImage);
         pnlImage.add(Box.createHorizontalStrut(20));
         pnlImage.add(pnlNames);
 
-        pnlCity.setPreferredSize(new Dimension(400,70));
+        pnlCity.setPreferredSize(new Dimension(400, 70));
         pnlCity.add(lblCity, BorderLayout.CENTER);
 
         pnlButtons.add(btnExit);
@@ -101,7 +101,7 @@ public class SplashScreen extends JFrame{
         pnlContent.add(pnlImage);
         pnlContent.add(pnlCity);
 
-        pnlContent.add(pnlButtons,BorderLayout.SOUTH);
+        pnlContent.add(pnlButtons, BorderLayout.SOUTH);
         add(pnlContent);
 
         // Установка параметров окна

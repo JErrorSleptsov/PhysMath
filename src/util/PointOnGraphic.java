@@ -1,13 +1,9 @@
 package util;
 
 public class PointOnGraphic {
-    double X;
-    double Y;
-
-    public PointOnGraphic() {
-
-    }
-
+    private double X;
+    private double Y;
+    public PointOnGraphic(){}
     public PointOnGraphic(double x, double y) {
         X = x;
         Y = y;

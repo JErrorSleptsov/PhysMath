@@ -12,17 +12,21 @@ import windows.dialog.ErrorDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 /**
  * Основной фрейм программы.
  * Класс включает в себя все визуальные компоненты, а также большинство
  * слушателей.
+ *
  * @author Sleptsov D.A.
- * */
+ */
 public class MainWindow extends JFrame {
-    Calculator calculator = new Calculator(); // объект для расчётов. Реализует интерфейс PhysMethods
-    int index=0; // с помощью перменной index будет остлеживаться история решений
-    Solution solution; // представляет одно решение, содержащее все входные и выходные параметры
-    SolutionsHistory history = new SolutionsHistory(); // объект представляющий историю решений
+    // объект для расчётов. Реализует интерфейс PhysMethods
+    private static final Calculator calculator = new Calculator();
+    // с помощью перменной index будет остлеживаться история решений
+    private int index = 0;
+    private Solution solution; // представляет одно решение, содержащее все входные и выходные параметры
+    private SolutionsHistory history = new SolutionsHistory(); // объект представляющий историю решений
 
     // поля для хранения данных
     private double weightValue = 0;
@@ -32,93 +36,9 @@ public class MainWindow extends JFrame {
     private double energyValue = 0;
     private double fallTimeValue = 0;
 
-
-    private JMenuBar mnuHeader = new JMenuBar();
-    private JMenuItem mniAbout = new JMenuItem("О программе");
-    private JMenu mnuEdit = new JMenu("Дополнительно");
-    private JMenuItem mniExit = new JMenuItem("Выход");
-    private JMenuItem mniAuthor = new JMenuItem("Об авторе");
-
-    private JPanel pnlMain = new JPanel(new BorderLayout()); // основная панель, на которой будут размещаться остальные
-    private JPanel pnlRight = new JPanel(new BorderLayout());
-    private JPanel pnlLeft = new JPanel();
-    private JPanel pnlGraphics = new JPanel(new BorderLayout());
-    private JPanel pnlTopLeft = new JPanel(); // панель для размещения компонентов в верхней части левой панели
-
-    // панели графиков зависимости
-    private JPanel pnlGraphicSpeedHeight = new JPanel();
-    private JPanel pnlGraphicSpeedTime = new JPanel();
-    private JPanel pnlGraphicPotEnergyHeight = new JPanel();
-    private JPanel pnlGraphicPotEnergyTime = new JPanel();
-    private JPanel pnlGraphicKinEnergyHeight = new JPanel();
-    private JPanel pnlGraphicKinEnergyTime = new JPanel();
-
-    private JSplitPane splHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLeft, pnlRight); // разделение окна на 2 части
-
-    private JLabel lblInputMain = new JLabel("Вводные данные:");
-    private JLabel lblWeight = new JLabel("Масса тела (кг):");
-    private JLabel lblHeight = new JLabel("Высота (м):");
-    private JLabel lblStartSpeed = new JLabel("Начальная скорость (м/с):");
-    private JLabel lblOutputMain = new JLabel("Результаты вычислений:");
-    private JLabel lblMaxSpeed = new JLabel("Макс.скорость (м/c):");
-    private JLabel lblMaxEnergy = new JLabel("Макс. энергия (Дж):");
-    private JLabel lblFallTime = new JLabel("Время падения (с):");
-
-    private JTextField txtWeight = new JTextField();
-    private JTextField txtHeight = new JTextField();
-    private JTextField txtStartSpeed = new JTextField();
-    private JTextField txtMaxSpeed = new JTextField();
-    private JTextField txtMaxEnergy = new JTextField();
-    private JTextField txtFallTime = new JTextField();
-
-    private JButton btnCalculate = new JButton("Рассчитать");
-    private JButton btnClear = new JButton("Очистить");
-
-
-    private JTabbedPane tabForGraphics = new JTabbedPane(); // tabControl для удобного переключения между графиками
-
-    // объекты для отрисовки грфиков (для каждого свой)
-    private GraphicsPainter speedHGraphicPainter = new GraphicsPainter("Скорость",
-            "Скорость",
-            "Высота");
-    private GraphicsPainter speedTGraphicPainter = new GraphicsPainter("Скорость",
-            "Скорость",
-            "Время");
-    private GraphicsPainter PotentialEnergyHGraphicPainter = new GraphicsPainter("Потенциальная энергия",
-            "Потенциальная энергия",
-            "Высота");
-    private GraphicsPainter KineticEnergyHGraphicPainter = new GraphicsPainter("Кинетическая энергия",
-            "Кинетическая энергия",
-            "Высота");
-
-    private GraphicsPainter KineticEnergyTGraphicPainter = new GraphicsPainter("Кинетическая энергия",
-            "Кинетическая энергия",
-            "Время");
-
-    private GraphicsPainter PotentialEnergyTGraphicPainter = new GraphicsPainter("Потенциальная энергия",
-            "Потенциальная энергия",
-            "Время");
-    // объекты графков (предоставляется библиотекой FreeChart)
-    private JFreeChart chartSpeedHeight = speedHGraphicPainter.createChart(speedHGraphicPainter.createDataset());
-    private JFreeChart chartSpeedTime = speedTGraphicPainter.createChart(speedTGraphicPainter.createDataset());
-    private JFreeChart chartPotEnergyHeight = PotentialEnergyHGraphicPainter.createChart(PotentialEnergyHGraphicPainter.createDataset());
-    private JFreeChart chartPotEnergyTime = PotentialEnergyTGraphicPainter.createChart(PotentialEnergyTGraphicPainter.createDataset());
-    private JFreeChart chartKinEnergyHeight = KineticEnergyHGraphicPainter.createChart(KineticEnergyHGraphicPainter.createDataset());
-    private JFreeChart chartKinEnergyTime = KineticEnergyTGraphicPainter.createChart(KineticEnergyTGraphicPainter.createDataset());
-
-    private ChartPanel pnlSpeedHeight = new ChartPanel(chartSpeedHeight);
-    private ChartPanel pnlSpeedTime = new ChartPanel(chartSpeedTime);
-    private ChartPanel pnlPotEnergyHeight = new ChartPanel(chartPotEnergyHeight);
-    private ChartPanel pnlPotEnergyTime = new ChartPanel(chartPotEnergyTime);
-    private ChartPanel pnlKinEnergyHeight = new ChartPanel(chartKinEnergyHeight);
-    private ChartPanel pnlKinEnergyTime = new ChartPanel(chartKinEnergyTime);
-
-    private Font fontTitle = new Font("Arial", Font.BOLD, 18);
-    private Font styleForOptions = new Font("Arial", Font.BOLD, 16);
-
-
     // Инициализация окна
     public MainWindow() {
+        int a = 5;
         // Установка свойств главного окна
         setTitle("Кинематичека тела при свободном падении");
         setSize(1000, 618);
@@ -126,12 +46,25 @@ public class MainWindow extends JFrame {
         setMinimumSize(new Dimension(1100, 618));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+        JMenuBar mnuHeader = new JMenuBar();
+        JMenuItem mniAbout = new JMenuItem("О программе");
+        JMenu mnuEdit = new JMenu("Дополнительно");
+        JMenuItem mniExit = new JMenuItem("Выход");
+        JMenuItem mniAuthor = new JMenuItem("Об авторе");
+
         // Создание верхнего меню
         mnuEdit.add(mniAbout);
         mnuEdit.add(mniAuthor);
         mnuEdit.add(mniExit);
         mnuHeader.add(mnuEdit);
         setJMenuBar(mnuHeader);
+
+        JPanel pnlMain = new JPanel(new BorderLayout()); // основная панель, на которой будут размещаться остальные
+        JPanel pnlRight = new JPanel(new BorderLayout());
+        JPanel pnlLeft = new JPanel();
+        JPanel pnlGraphics = new JPanel(new BorderLayout());
+        JPanel pnlTopLeft = new JPanel(); // панель для размещения компонентов в верхней части левой панели
 
         // задание свойств основных панелей
         pnlMain.setBackground(Color.WHITE);
@@ -144,7 +77,52 @@ public class MainWindow extends JFrame {
         pnlTopLeft.setLayout(topPanelLayout);
         pnlTopLeft.setPreferredSize(new Dimension(370, 540));
 
-        // создание графика скорость/высота
+        // панели графиков зависимости
+        JPanel pnlGraphicSpeedHeight = new JPanel();
+        JPanel pnlGraphicSpeedTime = new JPanel();
+        JPanel pnlGraphicPotEnergyHeight = new JPanel();
+        JPanel pnlGraphicPotEnergyTime = new JPanel();
+        JPanel pnlGraphicKinEnergyHeight = new JPanel();
+        JPanel pnlGraphicKinEnergyTime = new JPanel();
+
+        // объекты для отрисовки грфиков (для каждого свой)
+        GraphicsPainter speedHGraphicPainter = new GraphicsPainter("Скорость",
+                "Скорость",
+                "Высота");
+        GraphicsPainter speedTGraphicPainter = new GraphicsPainter("Скорость",
+                "Скорость",
+                "Время");
+        GraphicsPainter PotentialEnergyHGraphicPainter = new GraphicsPainter("Потенциальная энергия",
+                "Потенциальная энергия",
+                "Высота");
+        GraphicsPainter KineticEnergyHGraphicPainter = new GraphicsPainter("Кинетическая энергия",
+                "Кинетическая энергия",
+                "Высота");
+
+        GraphicsPainter KineticEnergyTGraphicPainter = new GraphicsPainter("Кинетическая энергия",
+                "Кинетическая энергия",
+                "Время");
+
+        GraphicsPainter PotentialEnergyTGraphicPainter = new GraphicsPainter("Потенциальная энергия",
+                "Потенциальная энергия",
+                "Время");
+        // объекты графков (предоставляется библиотекой FreeChart)
+        JFreeChart chartSpeedHeight = speedHGraphicPainter.createChart(speedHGraphicPainter.createDataset());
+        JFreeChart chartSpeedTime = speedTGraphicPainter.createChart(speedTGraphicPainter.createDataset());
+        JFreeChart chartPotEnergyHeight = PotentialEnergyHGraphicPainter.createChart(PotentialEnergyHGraphicPainter.createDataset());
+        JFreeChart chartPotEnergyTime = PotentialEnergyTGraphicPainter.createChart(PotentialEnergyTGraphicPainter.createDataset());
+        JFreeChart chartKinEnergyHeight = KineticEnergyHGraphicPainter.createChart(KineticEnergyHGraphicPainter.createDataset());
+        JFreeChart chartKinEnergyTime = KineticEnergyTGraphicPainter.createChart(KineticEnergyTGraphicPainter.createDataset());
+
+        ChartPanel pnlSpeedHeight = new ChartPanel(chartSpeedHeight);
+        ChartPanel pnlSpeedTime = new ChartPanel(chartSpeedTime);
+        ChartPanel pnlPotEnergyHeight = new ChartPanel(chartPotEnergyHeight);
+        ChartPanel pnlPotEnergyTime = new ChartPanel(chartPotEnergyTime);
+        ChartPanel pnlKinEnergyHeight = new ChartPanel(chartKinEnergyHeight);
+        ChartPanel pnlKinEnergyTime = new ChartPanel(chartKinEnergyTime);
+
+        JTabbedPane tabForGraphics = new JTabbedPane(); // tabControl для удобного переключения между графиками
+
         addGraphic(pnlGraphicSpeedHeight, pnlSpeedHeight);
         tabForGraphics.addTab("Скорость/Высота", pnlGraphicSpeedHeight);
 
@@ -170,11 +148,28 @@ public class MainWindow extends JFrame {
 
         pnlGraphics.add(tabForGraphics, BorderLayout.NORTH);
 
+        JSplitPane splHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLeft, pnlRight); // разделение окна на 2 части
+
         splHorizontal.setResizeWeight(0); // устанавливаем вес разделителя
         splHorizontal.setEnabled(false); // запрещаем использовать разделитель
 
-
+        JLabel lblInputMain = new JLabel("Вводные данные:");
+        JLabel lblWeight = new JLabel("Масса тела (кг):");
+        JLabel lblHeight = new JLabel("Высота (м):");
+        JLabel lblStartSpeed = new JLabel("Начальная скорость (м/с):");
+        JLabel lblOutputMain = new JLabel("Результаты вычислений:");
+        JLabel lblMaxSpeed = new JLabel("Макс.скорость (м/c):");
+        JLabel lblMaxEnergy = new JLabel("Макс. энергия (Дж):");
+        JLabel lblFallTime = new JLabel("Время падения (с):");
+        Font fontTitle = new Font("Arial", Font.BOLD, 18);
+        Font styleForOptions = new Font("Arial", Font.BOLD, 16);
         lblInputMain.setFont(fontTitle);
+        JTextField txtWeight = new JTextField();
+        JTextField txtHeight = new JTextField();
+        JTextField txtStartSpeed = new JTextField();
+        JTextField txtMaxSpeed = new JTextField();
+        JTextField txtMaxEnergy = new JTextField();
+        JTextField txtFallTime = new JTextField();
 
         txtWeight.setMaximumSize(new Dimension(pnlLeft.getPreferredSize().width * 2, 25));
         txtWeight.setText("1");
@@ -197,11 +192,14 @@ public class MainWindow extends JFrame {
         weightValue = Double.parseDouble(txtWeight.getText());
         heightValue = Double.parseDouble(txtHeight.getText());
         startSpeedValue = Double.parseDouble(txtStartSpeed.getText());
-        initFields();
+        initFields(txtMaxSpeed, txtMaxEnergy, txtFallTime);
 
         txtWeight.addKeyListener(new TxtKeyListener());
         txtHeight.addKeyListener(new TxtKeyListener());
         txtStartSpeed.addKeyListener(new TxtKeyListener());
+
+        JButton btnCalculate = new JButton("Рассчитать");
+        JButton btnClear = new JButton("Очистить");
 
         btnCalculate.setMaximumSize(new Dimension(pnlLeft.getPreferredSize().width * 2, 30));
         btnClear.setMaximumSize(new Dimension(pnlLeft.getPreferredSize().width * 2, 30));
@@ -268,18 +266,19 @@ public class MainWindow extends JFrame {
                     startSpeedValue = Double.parseDouble(txtStartSpeed.getText());
 
                     if (weightValue == 0 || heightValue == 0) {
-                        ErrorDialog dialog = new ErrorDialog(getMainWindow(), "Ошибка", "Значениe" +
-                                " полей \"масса\" и \"высота\" не может быть нулевым ");
+                        ErrorDialog.setMessage("Значениe полей \"масса\" и \"высота\" не может быть нулевым ");
+                        ErrorDialog errorDialog = new ErrorDialog(getMainWindow(),"Ошибка");
+
                         if (weightValue == 0) {
                             txtWeight.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
                         }
                         if (heightValue == 0) {
                             txtHeight.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
                         }
-                    }
-                    else if (weightValue > 10000 || heightValue > 10000 || startSpeedValue > 10000) {
-                        ErrorDialog dialog = new ErrorDialog(getMainWindow(), "Ошибка", "Значениe" +
-                                " полей \"масса\", \"высота\" и \"начальная скорость\" не может быть больше чем 10000");
+                    } else if (weightValue > 10000 || heightValue > 10000 || startSpeedValue > 10000) {
+                        ErrorDialog.setMessage("Значениe полей \"масса\", \"высота\" и \"начальная скорость\" не " +
+                                "может быть больше чем 10000");
+                        ErrorDialog errorDialog = new ErrorDialog(getMainWindow(),"Ошибка");
                         if (weightValue > 10000) {
                             txtWeight.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
                         }
@@ -290,7 +289,7 @@ public class MainWindow extends JFrame {
                             txtStartSpeed.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
                         }
                     } else {
-                        initFields();
+                        initFields(txtMaxSpeed, txtMaxEnergy, txtFallTime);
                         paintGraphic(speedHGraphicPainter, chartSpeedHeight);
                         paintGraphic(speedTGraphicPainter, chartSpeedTime);
                         paintGraphic(PotentialEnergyHGraphicPainter, chartPotEnergyHeight);
@@ -306,8 +305,8 @@ public class MainWindow extends JFrame {
                     txtWeight.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
                     txtHeight.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
                     txtStartSpeed.setBorder(BorderFactory.createLineBorder(new Color(255, 84, 84)));
-                    ErrorDialog dialog = new ErrorDialog(getMainWindow(), "Ошибка", "Поля \"масса\"," +
-                            " \"высота\" и \"начальная скорость\" не могут быть пустыми ");
+                    ErrorDialog.setMessage("Поля масса,  \"высота\" и \"начальная скорость\" не могут быть пустыми ");
+                    ErrorDialog errorDialog = new ErrorDialog(getMainWindow(),"Ошибка");
                 }
                 repaint();
             }
@@ -328,7 +327,7 @@ public class MainWindow extends JFrame {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z && e.getID() == KeyEvent.KEY_PRESSED) {
-                    if (index>0){
+                    if (index > 0) {
                         index--;
                         solution = history.get(index);
                         txtWeight.setText(Double.toString(solution.getWeight()));
@@ -341,7 +340,7 @@ public class MainWindow extends JFrame {
                     }
                 }
                 if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Y && e.getID() == KeyEvent.KEY_PRESSED) {
-                    if (index<history.getHistorySize()-1) {
+                    if (index < history.getHistorySize() - 1) {
                         index++;
                         solution = history.get(index);
                         txtWeight.setText(Double.toString(solution.getWeight()));
@@ -390,65 +389,76 @@ public class MainWindow extends JFrame {
         });
         setVisible(true);
     }
+
     /**
      * Метод getMainWindow возвращает ссылку на главное окно
      * ПОлезно при создании объекта диалогового окна в анономном классе,
      * где невозможно получить ссылку на окно с помощью ключевого слова this
-     * */
+     */
     private JFrame getMainWindow() {
         return this;
     }
+
     /**
      * Метод paintGraphic необходим для отрисовки графика зависимости
+     *
      * @param painter - объект, ответсвенный за отрисовку графика
-     * @param chart - представляет холст для создания графика
-     * */
+     * @param chart   - представляет холст для создания графика
+     */
     private void paintGraphic(GraphicsPainter painter, JFreeChart chart) {
         painter.setStartSpeed(startSpeedValue);
         painter.setWeight(weightValue);
         painter.setHeight(heightValue);
-        chartSpeedHeight = painter.createChart(painter.updateDataset());
+        chart = painter.createChart(painter.updateDataset());
     }
+
     /**
      * Метод addGraphic необходим для добавления графика в панель
+     *
      * @param pnlParent - панель-родитель, на которую будет добавляться график
-     * @param pnlChild - панель-потомок, которая будет содержать график
-     * */
+     * @param pnlChild  - панель-потомок, которая будет содержать график
+     */
     private void addGraphic(JPanel pnlParent, JPanel pnlChild) {
         pnlParent.setBackground(Color.WHITE);
         pnlParent.setLayout(new BorderLayout());
         pnlParent.setPreferredSize(new Dimension(0, 405));
         pnlParent.add(pnlChild, BorderLayout.CENTER);
     }
+
     /**
      * Метод roundToDecimalPlaces необходим для округления значения double до некоторого числа знаков после запятой
-     * @param d - значение для округления
+     *
+     * @param d             - значение для округления
      * @param decimalPlaces - количество знаков после запятой
-     * */
+     */
     private double roundToDecimalPlaces(double d, int decimalPlaces) {
         double factor = Math.pow(10, decimalPlaces);
         return Math.round(d * factor) / factor;
     }
+
     /**
      * Метод findValues используя объект calculator находит искомые параметры
-     * */
+     */
     private void findValues() {
         maxSpeedValue = roundToDecimalPlaces(calculator.findSpeedUseHeight(heightValue, startSpeedValue), 3);
         energyValue = roundToDecimalPlaces(calculator.findMaxEnergy(weightValue, heightValue, startSpeedValue), 3);
         fallTimeValue = roundToDecimalPlaces(calculator.findFallTime(heightValue, startSpeedValue), 3);
     }
+
     /**
      * Метод addSolution добавляет новое решение в историю
-     * */
-    private void addSolution(){
-        history.add(new Solution(weightValue,heightValue,startSpeedValue,
-                maxSpeedValue,energyValue,fallTimeValue));
-        index = history.getHistorySize()-1;
+     */
+    private void addSolution() {
+        history.add(new Solution(weightValue, heightValue, startSpeedValue,
+                maxSpeedValue, energyValue, fallTimeValue));
+        index = history.getHistorySize() - 1;
     }
+
     /**
      * Метод initFields устанавливает в текстовые поля результаты вычислений
-     * */
-    private void initFields() {
+     *
+     */
+    private void initFields(JTextField txtMaxSpeed, JTextField txtMaxEnergy, JTextField txtFallTime) {
         findValues();
         addSolution();
         txtMaxSpeed.setText(Double.toString(maxSpeedValue));

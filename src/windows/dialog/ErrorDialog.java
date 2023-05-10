@@ -1,26 +1,30 @@
 package windows.dialog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ErrorDialog extends JDialog {
-    private JPanel pnlContent = new JPanel();
-    private ImageIcon imgError = new ImageIcon("resources/images/error.png");
-    private JLabel lblErrImg = new JLabel(imgError);
-    private JLabel lblMessage = new JLabel();
-    private Font font = new Font("Montserrat Medium", Font.PLAIN, 12);
-    private JButton btnOk = new JButton("Хорошо");
-    public ErrorDialog(JFrame parent, String title, String message) {
+    private static String errorMessage ="Ошибка";
+
+    public static void setMessage(String message) {
+        errorMessage = message;
+    }
+
+    public ErrorDialog(JFrame parent, String title) {
         super(parent, title, true);
+        JPanel pnlContent = new JPanel();
         pnlContent.setLayout(new BoxLayout(pnlContent, BoxLayout.PAGE_AXIS));
         pnlContent.setBackground(Color.WHITE);
-
-
-        lblMessage.setText(message);
+        JLabel lblMessage = new JLabel();
+        lblMessage.setText(errorMessage);
+        Font font = new Font("Montserrat Medium", Font.PLAIN, 12);
+        JButton btnOk = new JButton("Хорошо");
         lblMessage.setFont(font);
         btnOk.setFont(font);
-
+        ImageIcon imgError = new ImageIcon("resources/images/error.png");
+        JLabel lblErrImg = new JLabel(imgError);
         // установка выравнивания элементов по центру
         lblErrImg.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -50,7 +54,7 @@ public class ErrorDialog extends JDialog {
 
         setTitle("Неверный формат параметров");
         // установка размеров и запрет изменения размеров окна
-        setSize(500,250);
+        setSize(500, 250);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
