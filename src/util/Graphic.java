@@ -14,7 +14,7 @@ public class Graphic implements GraphData {
     private Calculator calculator =  new Calculator();
     private double X;
     private double Y;
-    private ArrayList<PointOnGraphic> points = new ArrayList<>();
+    private ArrayList<Point2D> points = new ArrayList<>();
 
     @Override
     public ArrayList createSpeedOnHeightGraphic(double height, double startSpeed){
@@ -25,7 +25,7 @@ public class Graphic implements GraphData {
             Y = h;
             X = calculator.findSpeedUseHeight(height-h, startSpeed);
             h -= k;
-            points.add(new PointOnGraphic(X,Y));
+            points.add(new Point2D(X,Y));
         }
         return points;
     }
@@ -38,13 +38,13 @@ public class Graphic implements GraphData {
         while(time<=fallTime){
             X= calculator.findSpeedUseTime(time,startSpeed);
             Y=time;
-            points.add(new PointOnGraphic(X,Y));
+            points.add(new Point2D(X,Y));
             time +=k;
         }
         return points;
     }
     @Override
-    public ArrayList createPotentialEnergyUseHeightGraphic(double weight, double height){
+    public ArrayList createPotentialEnergyOnHeightGraphic(double weight, double height){
         double k = height/1000;
         double h=height;
         points.clear();
@@ -52,12 +52,12 @@ public class Graphic implements GraphData {
             h -= k;
             Y = h;
             X = calculator.findPotentialEnergy(weight,h);
-            points.add(new PointOnGraphic(X,Y));
+            points.add(new Point2D(X,Y));
         }
         return points;
     }
     @Override
-    public ArrayList createKinematicEnergyUseHeightGraphic(double weight, double height, double startSpeed){
+    public ArrayList createKinematicEnergyOnHeightGraphic(double weight, double height, double startSpeed){
         double k = height/1000;
         double h=height;
         double speed=0;
@@ -67,12 +67,12 @@ public class Graphic implements GraphData {
             Y = h;
             speed = calculator.findSpeedUseHeight(height-h,startSpeed);
             X = calculator.findKineticEnergy(weight,speed);
-            points.add(new PointOnGraphic(X,Y));
+            points.add(new Point2D(X,Y));
         }
         return points;
     }
     @Override
-    public ArrayList createKinematicEnergyUseTimeGraphic(double weight, double height, double startSpeed){
+    public ArrayList createKinematicEnergyOnTimeGraphic(double weight, double height, double startSpeed){
         double fallTime= calculator.findFallTime(height,startSpeed);
         double time=0;
         double speed = startSpeed;
@@ -82,13 +82,13 @@ public class Graphic implements GraphData {
             speed = calculator.findSpeedUseTime(time,startSpeed);
             X= calculator.findKineticEnergy(weight,speed);
             Y=time;
-            points.add(new PointOnGraphic(X,Y));
+            points.add(new Point2D(X,Y));
             time +=k;
         }
         return points;
     }
     @Override
-    public ArrayList createPotentialEnergyUseTimeGraphic(double weight, double height, double startSpeed){
+    public ArrayList createPotentialEnergyOnTimeGraphic(double weight, double height, double startSpeed){
         double fallTime= calculator.findFallTime(height, startSpeed);
         double time=0;
         double k = fallTime/1000;
@@ -96,7 +96,7 @@ public class Graphic implements GraphData {
         while(time<=fallTime){
             X= calculator.findPotentialEnergy(weight,height-(startSpeed*time+9.81*time*time/2));
             Y=time;
-            points.add(new PointOnGraphic(X,Y));
+            points.add(new Point2D(X,Y));
             time +=k;
         }
         return points;

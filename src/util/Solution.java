@@ -1,5 +1,17 @@
 package util;
-
+/**
+ * Класс Solution является представлением решения произведенного над физическим телом при свободном падении.
+ * ОН содержит необходимые для расчётов и анализа данные, такие как
+ * <ul>
+ * <li> weight - масса тела (кг)
+ * <li> height - высота сбрасывания (м)
+ * <li> startSpeed - начальная скорость (м/c)
+ * <li> maxSpeed - максимальная развиваемая скорость (м/c)
+ * <li> maxEnergy - максимальная энергия тела
+ * <li> fallTime -  время падения тела
+ * </ul>
+ * @author Sleptsov D.A.
+ * */
 public class Solution   {
     private final double weight;
     private final double height;

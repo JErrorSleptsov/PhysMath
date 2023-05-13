@@ -4,7 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Класс представляющий диалоговое окно, сообщающее об ошибке
+ * при заполнении текстовых полей данными. Наследуется от класса JDialog
+ *
+ * @author Sleptsov D.A.
+ * */
 public class ErrorDialog extends JDialog {
     private static String errorMessage ="Ошибка";
 

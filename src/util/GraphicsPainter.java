@@ -13,8 +13,16 @@ import org.jfree.util.ShapeUtilities;
 
 import java.awt.*;
 import java.util.ArrayList;
-
+/**
+ * Класс GraphicsPainter содержит методы для создания и обновления графиков,
+ * используя инструменты библиотеки FreeChart.
+ * @author Sleptsov D.A.
+ * */
 public class GraphicsPainter {
+
+    /**
+     * Объект Graphic, на основе которого и будет происходить создание графика
+     * */
     private Graphic graphic = new Graphic();
 
     private String title;
@@ -25,7 +33,7 @@ public class GraphicsPainter {
     private double height=1000;
     private double startSpeed=0;
     private XYSeries series;
-    private ArrayList<PointOnGraphic> points = new ArrayList<>(); // Массив объектов точка
+    private ArrayList<Point2D> points = new ArrayList<>(); // Массив объектов точка
 
     public double getWeight() {
         return weight;
@@ -80,10 +88,18 @@ public class GraphicsPainter {
         this.yAxisLabel = yAxisLabel;
     }
 
+    /**
+     * Создание Dataset для графика
+     * @return новый Dataset
+     * */
     public XYDataset createDataset() {
-        series = new XYSeries(this.title); // Переменная для записи точек графикаv
+        series = new XYSeries(this.title); // Переменная для записи точек графика
          return updateDataset();
     }
+    /**
+     * Метод updateDataset предназначен для обновления точек графика, если данные состояния физического тела изменятся.
+     * @return обновленный Dataset
+     * */
     public XYDataset updateDataset(){
         series.clear();
         if (this.title=="Скорость" && yAxisLabel=="Высота"){ // Условие для графика скорость/высота
@@ -93,23 +109,28 @@ public class GraphicsPainter {
             points = graphic.createSpeedOnTimeGraphic(height,startSpeed);
         }
         if (this.title=="Потенциальная энергия" && yAxisLabel=="Высота"){ // Условие для графика энергия/высота
-            points = graphic.createPotentialEnergyUseHeightGraphic(weight,height);
+            points = graphic.createPotentialEnergyOnHeightGraphic(weight,height);
         }
         if (this.title=="Кинетическая энергия" && yAxisLabel=="Высота"){ // Условие для графика энергия/высота
-            points = graphic.createKinematicEnergyUseHeightGraphic(weight,height,startSpeed);
+            points = graphic.createKinematicEnergyOnHeightGraphic(weight,height,startSpeed);
         }
         if (this.title=="Кинетическая энергия" && yAxisLabel=="Время"){ // Условие для графика энергия/высота
-            points = graphic.createKinematicEnergyUseTimeGraphic(weight,height, startSpeed);
+            points = graphic.createKinematicEnergyOnTimeGraphic(weight,height, startSpeed);
         }
         if (this.title=="Потенциальная энергия" && yAxisLabel=="Время"){ // Условие для графика энергия/высота
-            points = graphic.createPotentialEnergyUseTimeGraphic(weight,height, startSpeed);
+            points = graphic.createPotentialEnergyOnTimeGraphic(weight,height, startSpeed);
         }
-        for (PointOnGraphic point: points) { // запись точек в график
+        for (Point2D point: points) { // запись точек в график
             series.add(point.getX(), point.getY());
          }
         return new XYSeriesCollection(series);
     }
 
+    /**
+     * Метод для конструирования внешнего вида графика, а также отрисовки гривой на основе DataSet
+     * @return объект типа JChart - который представляет общее представление графика(Оси, деления, кривая,
+     * заголовки осей и тп.)
+     * */
     public JFreeChart createChart(XYDataset dataset) {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 this.title,
