@@ -40,7 +40,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         int a = 5;
         // Установка свойств главного окна
-        setTitle("Кинематичека тела при свободном падении");
+        setTitle("Расчёт физических характеристик тела при свободном падении");
         setSize(1000, 618);
         setLocationRelativeTo(null);
         setMinimumSize(new Dimension(1100, 618));
@@ -370,7 +370,7 @@ public class MainWindow extends JFrame {
         mniAuthor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AuthorWindow();
+                new AboutAuthorWindow();
             }
         });
         // Обработчик для вызова окна "О программе"

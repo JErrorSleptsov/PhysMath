@@ -3,6 +3,7 @@ package util;
 /**
  * Класс Point2D представляет точку на двухмерной плоскости. Имеет всего 2 поля
  * координата X и координата Y
+ * @author Sleptsov D.A.
  * */
 public class Point2D {
     private double X;

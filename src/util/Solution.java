@@ -12,7 +12,7 @@ package util;
  * </ul>
  * @author Sleptsov D.A.
  * */
-public class Solution   {
+public class Solution{
     private final double weight;
     private final double height;
     private final double startSpeed;
