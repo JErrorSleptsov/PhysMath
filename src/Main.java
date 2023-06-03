@@ -1,5 +1,5 @@
 import windows.SplashScreenWindow;
-/***
+/**
  * Запуск программы
  * @author Sleptsov D.A.
  */
